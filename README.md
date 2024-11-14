@@ -1,5 +1,5 @@
 $$
-\color{#239DAE}{\max_{\text{consensus}}}
+\color{#239DAE}{\text{Typst} \cdot \max_{\text{consensus}}}
 $$
 
 # Maximum Consensus <sub>「最大共识」</sub>
