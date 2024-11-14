@@ -1,0 +1,4 @@
+[package]
+name = "maximum-consensus"
+version = "0.1.0"
+entrypoint = "entry.typ"
