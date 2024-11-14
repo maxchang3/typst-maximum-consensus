@@ -143,6 +143,7 @@
   abstract: "",
   type: "report",
   headerType: "课程作业",
+  hideHeader: false,
   doc,
 ) = {
   set page(margin: (top: 2.54cm, bottom: 2.54cm, left: 3.18cm, right: 3.18cm))
@@ -207,10 +208,12 @@
   show raw: set text(font: ("Menlo", "Source Han Sans SC"), lang: "zh")
   codly(number-format: none)
   assert(("report", "essay").contains(type))
-  if type == "report" {
-    (header.report)(title, course, date, class, name, id, institute, teacher)
-  } else {
-    (header.essay)(title, course, date, class, name, id, institute, abstract)
+  if not hideHeader {
+    if type == "report" {
+      (header.report)(title, course, date, class, name, id, institute, teacher)
+    } else {
+      (header.essay)(title, course, date, class, name, id, institute, abstract)
+    }
   }
   doc
 }
