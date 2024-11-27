@@ -1,8 +1,9 @@
 #import "utils/font.typ": *
 #import "utils/mathext.typ": *
+#import "utils/term.typ": *
 #import "utils/wcop.typ"
 #import "@preview/codly:1.0.0": *
-#import "@preview/tablex:0.0.8": tablex, rowspanx, colspanx, hlinex
+#import "@preview/tablex:0.0.8": tablex, rowspanx, colspanx, hlinex, cellx
 
 #let tlt(..args) = tablex(
   auto-lines: false,
@@ -19,6 +20,17 @@
   hlinex(stroke: +1.5pt),
 )
 
+#let ucell(x, width: 8em) = box(
+  stroke: (
+    bottom: .5pt,
+  ),
+  inset: 1pt,
+  width: width,
+)[
+  #set text(baseline: -1pt)
+  #x
+]
+
 #let report_header(
   title,
   course,
@@ -29,24 +41,16 @@
   institute,
   teacher,
 ) = align(center)[
-  #text(font: kaiti, size: font_size.erhao, weight: "bold")[#title]
+  #text(font: kaiti, size: font_size.xiaoer, weight: "bold")[#title]
   #set text(font: heiti, weight: "semibold")
   #align(
     center,
     table(
       columns: 6,
-      rows: 2,
+      rows: 1,
       stroke: none,
       align: center,
-      [班#h(2em)级：],
-      table.hline(start: 1, end: 2, stroke: .5pt),
-      [#class],
-      [姓#h(2em)名：],
-      table.hline(start: 3, end: 4, stroke: .5pt),
-      [#name],
-      [学#h(2em)号：],
-      table.hline(start: 5, end: 6, stroke: .5pt),
-      [#id],
+      [班级：], ucell[#class], [姓名：], ucell(width: 5em)[#name], [学号：], ucell[#id],
     ),
   )
 ]
@@ -81,18 +85,31 @@
   probcounter.step()
 }
 
-#let problem(prob, ans) = [
-  #set text(font: "Source Han Sans SC", weight: "regular")
-  #set enum(numbering: "①")
-  #probcounter.step()
+#let problem(prob, ans, i: none) = [
+  #set text(font: ("Helvetica", "Source Han Sans SC"), weight: "regular")
+  #set enum(
+    numbering: (..ns) => numbering(
+      ("①", "(1)").at(ns.pos().len() - 1, default: "1)"),
+      ns.pos().last(),
+    ),
+    full: true,
+  )
+  #if i == none {
+    probcounter.step()
+  }
   #block(
-    fill: rgb("#f1f1fe"),
+    fill: rgb("#F9F8F9"),
+    stroke: .6pt + black,
     inset: 8pt,
     width: 100%,
     [
-      *#context {
-        "题目" + probcounter.display()+"."
-      }* #h(1em)
+      *#if i != none {
+        i
+      } else {
+        context {
+          probcounter.display()+"."
+        }
+      }*
       #prob
     ],
   )
@@ -181,9 +198,12 @@
   set math.equation(numbering: "(1.1)")
   set page(
     header: [
-      #text(font: kaiti, weight: "bold")[
-        《#course》#headerType
-      ]
+      #set text(font: kaiti, weight: "bold")
+
+      #institute
+      #h(1fr)
+      《#course》#headerType
+
       #v(.5em)
       #{
         set block(above: 2pt)
