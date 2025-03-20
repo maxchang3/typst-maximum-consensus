@@ -4,7 +4,7 @@ $$
 
 <small>基于 [Ori](https://github.com/OrangeX4/typst-ori/) 定制的、固执己见的（Opinionated） 通用 Typst 中文写作模板</small>
 
-# Maximum Consensus <small>「最大共识」</small>
+# Maximum Consensus <sub>「最大共识」</sub>
 
 > ~~最近用 Typst 完成了不少课程作业和论文。有些作业需要特定样式，我就逐一复刻；而没有明确要求的则自己设计，或是复用先前的格式略作修改。最近，我将一些通用的功能和样式整理提取，制作成了一个模板，取名为「最大共识」。~~
 
@@ -24,3 +24,5 @@ $$
   - 从别的项目移植，根据自己需求扩展的数学运算符号定义。
   - 使用 `#q[]` 定义一个问题。
 - 将原生的 `#qoute[]` 覆盖为 `#qoute-block[]`
+
+其他内容请参考 [Ori](https://github.com/OrangeX4/typst-ori/)
