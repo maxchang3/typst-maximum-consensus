@@ -105,6 +105,21 @@
     },
   )
   show raw.where(block: true): set raw(theme: "assets/dark-plus.tmTheme")
+  // https://github.com/typst/typst/issues/344#issuecomment-2669285516
+  show raw.where(block: true): code => {
+    grid(
+      columns: (auto, auto),
+      column-gutter: 1em,
+      row-gutter: par.leading,
+      align: (right, raw.align),
+      ..for line in code.lines {
+        (
+          text(fill: gray)[#line.number],
+          line.body,
+        )
+      },
+    )
+  }
   show raw.where(block: true): it => block(
     breakable: true,
     clip: true,
@@ -113,15 +128,10 @@
     radius: 5pt,
     fill: rgb("#1f1f1f"),
     {
-      show raw.line: it => {
-        text(fill: gray)[#it.number]
-        h(1em)
-        it.body
-      }
       set text(fill: rgb("#a2aabc"))
       [
         #let (name, color, icon) = codly-languages.at(it.lang)
-        #place(right)[ 
+        #place(right)[
           #icon
           #h(-.5em)
           #text(fill: color, name)
