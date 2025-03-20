@@ -8,8 +8,8 @@
 #import cosmos.fancy: *
 
 #let default-font = (
-  main: "IPM Plex Sans",
-  mono: "IBM Plex Mono",
+  main: "IBM Plex Sans",
+  mono: "Menlo",
   cjk: "Noto Serif SC",
   cjk-mono: "Noto Sans SC",
   emph-cjk: "KaiTi SC",
