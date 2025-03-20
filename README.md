@@ -10,10 +10,6 @@ $$
 
 由于代码过于凌乱，且一些基于特定课程的特定需求不具有通用型，目前（0.2.x）是在 [Ori](https://github.com/OrangeX4/typst-ori/) 的基础上做了一些自定义修改。因此目前仅用于个人使用，暂时不会发布 Package。
 
-<p align="center">
-<img src="preview/preview.png" width="60%" ></img>
-</p>
-
 修改内容如下：
 
 - 根据自身需求删除了一些包的引用。
@@ -25,4 +21,8 @@ $$
   - 使用 `#q[]` 定义一个问题。
 - 将原生的 `#qoute[]` 覆盖为 `#qoute-block[]`
 
-其他内容请参考 [Ori](https://github.com/OrangeX4/typst-ori/)
+<p align="center">
+<img src="preview/preview.png" width="60%" ></img>
+</p>
+
+其他内容请参考 [Ori](https://github.com/OrangeX4/typst-ori/)。
