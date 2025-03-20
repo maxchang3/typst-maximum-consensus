@@ -1,6 +1,6 @@
 #import "@preview/numbly:0.1.0": numbly
 #import "@preview/tablem:0.2.0": tablem, three-line-table
-#import "@preview/theorion:0.3.2": *
+#import "utils/box.typ": *
 #import "utils/font.typ": *
 #import "utils/mathext.typ": *
 #import "@preview/codly-languages:0.1.8": *
