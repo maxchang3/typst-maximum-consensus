@@ -3,7 +3,6 @@
 #import "@preview/theorion:0.3.2": *
 #import "utils/font.typ": *
 #import "utils/mathext.typ": *
-#import "@preview/codly:1.2.0": *
 #import "@preview/codly-languages:0.1.8": *
 
 #import cosmos.fancy: *
@@ -12,18 +11,10 @@
   main: "IPM Plex Sans",
   mono: "IBM Plex Mono",
   cjk: "Noto Serif SC",
-  emph-cjk: "KaiTi",
+  cjk-mono: "Noto Sans SC",
+  emph-cjk: "KaiTi SC",
   math: "New Computer Modern Math",
   math-cjk: "Noto Serif SC",
-)
-
-#let prob(content) = block(
-  fill: gray.lighten(90%),
-  stroke: .5pt + black,
-  radius: 3pt,
-  inset: 8pt,
-  width: 100%,
-  content,
 )
 
 /// 模板的核心类，规范了文档的格式。
@@ -78,7 +69,7 @@
     region: region,
   )
   show emph: text.with(font: ((name: font.main, covers: "latin-in-cjk"), font.emph-cjk))
-  show raw: set text(font: ((name: font.mono, covers: "latin-in-cjk"), font.cjk))
+  show raw: set text(font: ((name: font.mono, covers: "latin-in-cjk"), font.cjk-mono))
   show math.equation: it => {
     set text(font: font.math)
     show regex("\p{script=Han}"): set text(font: font.math-cjk)
@@ -101,6 +92,44 @@
     it
   }
   show heading: set block(spacing: 1.2em)
+
+  /// 设置代码块样式。
+  show raw.where(block: false): body => box(
+    fill: raw-color,
+    inset: (x: 3pt, y: 0pt),
+    outset: (x: 0pt, y: 3pt),
+    radius: 2pt,
+    {
+      set par(justify: false)
+      body
+    },
+  )
+  show raw.where(block: true): set raw(theme: "assets/dark-plus.tmTheme")
+  show raw.where(block: true): it => block(
+    breakable: true,
+    clip: true,
+    width: 100%,
+    inset: 8pt,
+    radius: 5pt,
+    fill: rgb("#1f1f1f"),
+    {
+      show raw.line: it => {
+        text(fill: gray)[#it.number]
+        h(1em)
+        it.body
+      }
+      set text(fill: rgb("#a2aabc"))
+      [
+        #let (name, color, icon) = codly-languages.at(it.lang)
+        #place(right)[ 
+          #icon
+          #h(-.5em)
+          #text(fill: color, name)
+        ]
+      ]
+      it
+    },
+  )
 
   /// 设置链接样式。
   show link: it => {
@@ -152,10 +181,6 @@
 
   /// 设置定理环境。
   show: show-theorion
-
-  /// 设置公式环境。
-  show: codly-init
-  codly(languages: codly-languages)
 
   /// 标题页。
   if maketitle {
