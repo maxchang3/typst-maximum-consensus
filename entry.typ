@@ -27,7 +27,7 @@
 /// - subject (string): 课程名。
 /// - semester (string): 学期。
 /// - date (datetime): 时间。
-/// - font (object): 字体。默认为 `default-font`。如果你想使用不同的字体，可以传入一个字典，包含 `main`、`mono`、`cjk`、`math` 和 `math-cjk` 字段。
+/// - font (object): 字体。默认为 `default-font`。如果你想使用不同的字体，可以传入一个字典，包含 `main`、`mono`、`cjk`、 `cjk-mono`、`math` 和 `math-cjk` 字段。
 /// - lang (string): 语言。默认为 `zh`。
 /// - region (string): 地区。默认为 `cn`。
 /// - body (content): 文档的内容。
