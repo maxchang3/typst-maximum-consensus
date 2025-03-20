@@ -2,7 +2,7 @@ $$
 \color{#239DAE}{\text{Typst} \cdot \max_{\text{consensus}}}
 $$
 
-<small>基于 [Ori](https://github.com/OrangeX4/typst-ori/) 定制的、固执己见的（Opinionated） 通用 Typst 中文写作模板</small>
+<small>基于 [Ori](https://github.com/OrangeX4/typst-ori/) 定制的、固执己见的（Opinionated） 通用 Typst 中文写作模板。</small>
 
 # Maximum Consensus <sub>「最大共识」</sub>
 
