@@ -47,7 +47,9 @@
   region: "cn",
   first-line-indent: (amount: 0pt, all: false),
   maketitle: false,
+  simple-title: false,
   makeoutline: false,
+  makeheader: true,
   outline-depth: 2,
   body,
 ) = {
@@ -70,11 +72,11 @@
   )
   show emph: text.with(font: ((name: font.main, covers: "latin-in-cjk"), font.emph-cjk))
   show raw: set text(font: ((name: font.mono, covers: "latin-in-cjk"), font.cjk-mono))
-  show math.equation: it => {
-    set text(font: font.math)
-    show regex("\p{script=Han}"): set text(font: font.math-cjk)
-    it
-  }
+  show math.equation: set text(font: (
+    (name: "Libertinus Serif", covers: "latin-in-cjk"), // 西文
+    (name: font.math-cjk, covers: regex(".")), // 中文
+    font.math, // 数学
+  ))
 
   /// 设置段落样式。
   set par(
@@ -129,14 +131,17 @@
     fill: rgb("#1f1f1f"),
     {
       set text(fill: rgb("#a2aabc"))
-      [
-        #let (name, color, icon) = codly-languages.at(it.lang)
-        #place(right)[
-          #icon
-          #h(-.5em)
-          #text(fill: color, name)
+      if it.lang != none and it.lang in codly-languages {
+        set text(fill: codly-languages.at(it.lang).color)
+        [
+          #let (name, color, icon) = codly-languages.at(it.lang)
+          #place(right)[
+            #icon
+            #h(-.5em)
+            #text(fill: color, name)
+          ]
         ]
-      ]
+      }
       it
     },
   )
@@ -168,7 +173,7 @@
   /// 设置页面。
   set page(
     paper: "a4",
-    header: {
+    header: if makeheader {
       set text(0.9em)
       stack(
         spacing: 0.2em,
@@ -183,7 +188,7 @@
       )
       // reset footnote counter
       counter(footnote).update(0)
-    },
+    } else { none },
     fill: bg-color,
     numbering: "1",
     margin: page-margin,
@@ -194,16 +199,27 @@
 
   /// 标题页。
   if maketitle {
-    // Title page
-    align(center + top)[
-      #v(20%)
-      #text(2em, weight: 500, subject)
-      #v(2em, weak: true)
-      #text(2em, weight: 500, title)
-      #v(2em, weak: true)
-      #author
-    ]
-    pagebreak(weak: true)
+    if simple-title {
+      // 简化标题页
+      align(center + top)[
+        #text(2em, weight: 500, subject)
+        #v(2em, weak: true)
+        #text(2em, weight: 500, title)
+        #v(1em, weak: true)
+        #author
+      ]
+    } else {
+      // 普通标题页
+      align(center + top)[
+        #v(20%)
+        #text(2em, weight: 500, subject)
+        #v(2em, weak: true)
+        #text(2em, weight: 500, title)
+        #v(2em, weak: true)
+        #author
+      ]
+      pagebreak(weak: true)
+    }
   }
 
   /// 目录。
