@@ -20,5 +20,28 @@
   ],
 )
 
-/// 不需要默认的 `quote`，直接用 `theorion` 的 `quote-box`。
 #let quote = quote-box
+#let note = note-box
+#let emphasis = emph-box
+#let warning = warning-box
+#let tip = tip-box
+#let caution = caution-box
+#let important = important-box
+#let question = note-box.with(
+  fill: rgb("#ff59bf"),
+  title: "Question",
+  icon-name: "question",
+)
+
+
+#let colorbox(title: "", color: black, ..args, body) = showybox(
+  title: title,
+  frame: (
+    border-color: color,
+    title-color: color.lighten(30%),
+    body-color: color.lighten(95%),
+    footer-color: purple.lighten(80%),
+  ),
+  ..args,
+  body,
+)
