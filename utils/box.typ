@@ -1,4 +1,4 @@
-#import "@preview/theorion:0.3.2": *
+#import "@preview/theorion:0.5.0": *
 
 #let qcounter = counter("problem")
 
@@ -20,13 +20,13 @@
   ],
 )
 
-#let quote = quote-box
+#let quote = quote-block
 #let note = note-box
-#let emphasis = emph-box
-#let warning = warning-box
-#let tip = tip-box
-#let caution = caution-box
-#let important = important-box
+#let emphasis = emph-block
+#let warning = warning-block
+#let tip = tip-block
+#let caution = caution-block
+#let important = important-block
 #let question = note-box.with(
   fill: rgb("#ff59bf"),
   title: "Question",

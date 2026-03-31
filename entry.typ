@@ -1,6 +1,6 @@
-#import "@preview/codly-languages:0.1.8": *
+#import "@preview/codly-languages:0.1.10": *
 #import "@preview/numbly:0.1.0": numbly
-#import "@preview/tablem:0.2.0": tablem, three-line-table
+#import "@preview/tablem:0.3.0": tablem, three-line-table
 #import "utils/box.typ": *
 #import "utils/font.typ": *
 #import "utils/mathext.typ"
