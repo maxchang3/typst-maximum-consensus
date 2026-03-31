@@ -2,7 +2,6 @@
  * REFERENCE: https://github.com/dccsillag/moremath.typ
  */
 
-#let ul(x) = math.underline(x)
 
 // PROBABILITY THEORY
 
@@ -24,26 +23,52 @@
 #let argmax = math.op("arg max", limits: true)
 
 
+// Text decoration functions for  equations
+// https://github.com/typst/typst/issues/2200
+
+#let ul(x) = math.underline(x)
+#let ulb(x) = math.bold(ul(x))
+#let st(content) = context {
+  let width = measure(content).width
+  box[
+    #content
+    #place(
+      dy: -3pt,
+      line(stroke: .5pt, length: width)
+    )
+  ]
+}
+
 // LOGIC SYMBOLS
 
-#let Box = sym.square.stroked
+#let Box = sym.square
 #let Diamond = sym.diamond
-#let vdash = math.op(sym.tack.r)
-#let vdashnt = math.op(sym.tack.r.not)
-#let models = math.op(sym.tack.r.double)
-#let modelsnt = math.op(sym.tack.r.double.not)
+#let vdash = symbol(
+  sym.tack.r,
+  ("not", sym.tack.r.not),
+)
+#let models = symbol(
+  sym.tack.r.double,
+  ("not", sym.tack.r.double.not),
+)
 #let strictif = symbol("⥽")
+#let wp = symbol("℘")
+#let asm = math.op("asm")
+#let iff = math.op(" iff ")
+#let varnothing = math.diameter
+#let falsum = sym.bot
 
 #let logical-shorthands(it) = {
   import "@preview/quick-maths:0.2.1": shorthands
 
   show: shorthands.with(
-    ($[]$, sym.square.stroked),
-    ($<>$, $diamond$),
-    ($|-$, math.op(sym.tack.r)),
-    ($|!-$, math.op(sym.tack.r.not)),
-    ($|=$, math.op(sym.tack.r.double)),
-    ($|!=$, math.op(sym.tack.r.double.not)),
+    ($[]$, Box),
+    ($<>$, Diamond),
+    ($|-$, math.op(vdash)),
+    ($|!-$, math.op(vdash.not)),
+    ($|=$, math.op(models)),
+    ($|!=$, math.op(models.not)),
   )
+
   it
 }

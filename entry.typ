@@ -3,8 +3,9 @@
 #import "@preview/tablem:0.2.0": tablem, three-line-table
 #import "utils/box.typ": *
 #import "utils/font.typ": *
-#import "utils/mathext.typ": *
+#import "utils/mathext.typ"
 
+#import mathext: *
 #import cosmos.fancy: *
 
 #let default-font = (
@@ -50,6 +51,7 @@
   simple-title: false,
   makeoutline: false,
   makeheader: true,
+  cover-math-fonts: false,
   outline-depth: 2,
   body,
 ) = {
@@ -73,10 +75,21 @@
   show emph: text.with(font: ((name: font.main, covers: "latin-in-cjk"), font.emph-cjk))
   show raw: set text(font: ((name: font.mono, covers: "latin-in-cjk"), font.cjk-mono))
   show math.equation: set text(font: (
-    (name: "Libertinus Serif", covers: "latin-in-cjk"), // 西文
-    (name: font.math-cjk, covers: regex(".")), // 中文
+    ..if cover-math-fonts {
+      (
+        (name: "New Computer Modern Math", covers: "latin-in-cjk"), // 西文
+        (name: font.math-cjk, covers: regex(".")), // 中文
+      )
+    },
     font.math, // 数学
   ))
+
+  // Fix highlight with inline math
+  show highlight: it => {
+    show math.equation: box.with(fill: it.fill)
+    it
+  }
+
 
   /// 设置段落样式。
   set par(
@@ -155,9 +168,6 @@
       it
     }
   }
-
-  /// 设置 figure 样式。
-  show figure.where(kind: table): set figure.caption(position: top)
 
   /// 设置列表样式。
   set list(indent: 6pt)
